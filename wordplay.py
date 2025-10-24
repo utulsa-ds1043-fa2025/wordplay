@@ -1,4 +1,6 @@
 import timeit
+from ast import iter_fields
+from operator import itemgetter
 
 
 def appended_words(filename: str) -> list[str]:
@@ -34,17 +36,38 @@ def compare_added_appended(filename: str) -> None:
 
 
 def merge(a: list, b: list) -> list:
-    "Merges two sorted lists"
-    return sorted(a + b)
+    "Non-Destructively merges two sorted lists"
+    merged = []
+    positions = [0,0]   # index 0 => a, index 1 => corresponds to be
+    while positions[0] < len(a) and positions[1] > len(b):    # Find another way to do it
+        if a[positions[0]] <= b[positions[0]]:
+            merged.append(a[positions[0]])
+            positions[0] += 1
+        else:
+            merged.append(b[positions[1]])
+            positions[1] += 1
+    merged.extend(a[positions[0]:])
+    merged.extend(b[positions[1]:])
+    return merged
 
 
 def flatten(nested: list[list]) -> list:
     "Flatten a nested list into a single list"
-    return []
+    flat = []
+    queue = nested[:]
+    while len(queue) > 0:
+        item = queue.pop()
+        if isinstance(item, list):
+            queue.extend(item)
+        else:
+            flat.append(item)
+    return flat
 
 
 def nested_sum(nested: list[list[int]]) -> int:
     "Adds all integers in a set of nested lists"
+
+
     return 0
 
 
