@@ -35,6 +35,7 @@ def compare_added_appended(filename: str) -> None:
 
 def merge(a: list, b: list) -> list:
     "Merges two sorted lists"
+    "This is not a meaningful change, but it'll do."
     return sorted(a + b)
 
 
