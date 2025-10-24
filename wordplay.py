@@ -1,4 +1,5 @@
 import timeit
+from collections.abc import Collection
 
 
 def appended_words(filename: str) -> list[str]:
@@ -34,13 +35,46 @@ def compare_added_appended(filename: str) -> None:
 
 
 def merge(a: list, b: list) -> list:
-    "Merges two sorted lists"
-    return sorted(a + b)
+    """Destructively merges two sorted lists"""
+    merged = []
+    while len(a) > 0 and len(b) > 0:
+        if a[0]<=b[0]:
+            merged.append(a.pop(0))
+        else:
+            merged.append(b.pop(0))
+    merged.extend(a)
+    merged.extend(b)
+    return merged
 
+def merge_2(a:list, b:list) -> list:
+    """Non-destructively merges two sorted list"""
+    merged = []
+    indices = {
+        'a': 0,
+        'b': 0
+    }
+    while indices['a'] < len(a) and indices['b'] < len(b):
+        if a[indices['a']] <= b[indices['b']]:
+            merged.append(a[indices['a']])
+            indices['a'] += 1
+        else:
+            merged.append(b[indices['b']])
+            indices['b'] += 1
+    merged.extend(a)
+    merged.extend(b)
+    return merged
 
 def flatten(nested: list[list]) -> list:
-    "Flatten a nested list into a single list"
-    return []
+   """Flatten a nested list into a single list"""
+   flat = []
+   queue = nested[:]
+   while len(queue) > 0:
+       item = queue.pop(0)
+       if isinstance(item, list):
+           queue.extend(item)
+       else:
+           flat.append(item)
+   return flat
 
 
 def nested_sum(nested: list[list[int]]) -> int:
