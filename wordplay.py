@@ -73,12 +73,27 @@ def flatten(nested: list[list]) -> list:
 
 def nested_sum(nested: list[list[int]]) -> int:
     "Adds all integers in a set of nested lists"
-    return sum(flatten(nested))
+    # 'lazy' approach is `return sum(flatten(nested))`
+    total = 0
+    for item in nested:
+        total += sum(item)
+    return total
 
 
 def cumulative_sum(numbers: list[int]) -> list[int]:
     "Creates the cumulative sum for a sequence of integers"
-    return [0] * len(numbers)
+    if len(numbers) == 0:
+        return list()
+    sums = [numbers[0]]
+    # we can use the index from enumerate(numbers[1:]) to get the previous sum
+    for index, number in enumerate(numbers[1:]):
+        sums.append(sums[index] + number)
+    # Alternatively, we could keep a running total
+    # total = 0
+    # for number in numbers:
+    #     total += number
+    #     sums.append(total)
+    return sums
 
 
 def middle(seq: list) -> list:
