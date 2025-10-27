@@ -35,15 +35,18 @@ def compare_added_appended(filename: str) -> None:
 
 def merge(a: list, b: list) -> list:
     "Non-destructively merges two sorted lists"
-    merged = []
-    positions = [0, 0] # index 0 => a, index 1 => b
-    while positions[0] < len(a) and positions[1] < len(b): # Find some other way
+    merged: list = []
+    positions: list[int] = [0, 0] # Keeps track of current position in a and b
+    # Walk through a and b, adding the smallest element at the current position
+    # for each list
+    while positions[0] < len(a) and positions[1] < len(b):
         if a[positions[0]] <= b[positions[1]]:
-            merged.append(a[positions[0]]) # Change this to something that won't destroy a
+            merged.append(a[positions[0]])
             positions[0] += 1
         else:
             merged.append(b[positions[1]])
             positions[1] += 1
+    # Add all remaining elements after all of one list is exhausted
     merged.extend(a[positions[0]:])
     merged.extend(b[positions[1]:])
     return merged
@@ -51,10 +54,16 @@ def merge(a: list, b: list) -> list:
 
 def flatten(nested: list[list]) -> list:
     "Flatten a nested list into a single list"
-    flat = []
-    queue = nested[:]
+    flat: list = []
+    # This example uses a queue (first in, first out)
+    # Alternatively, it could use a stack (first in, last out)
+    queue: list[list] = nested[:]
     while len(queue) > 0:
-        item = queue.pop(0)
+        # Queue -> take from front of list
+        # Stack -> take from end of list
+        item: list | any = queue.pop(0)
+        # if the item is a list, we need to examine its elements
+        # in case of additional layers of nesting
         if isinstance(item, list):
             queue.extend(item)
         else:
