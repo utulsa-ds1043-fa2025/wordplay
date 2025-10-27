@@ -47,7 +47,3 @@ def test_reverse_pairs():
 
 def test_interlocking_pairs():
     assert False
-
-
-def test_cumulative_sum():
-    assert False
