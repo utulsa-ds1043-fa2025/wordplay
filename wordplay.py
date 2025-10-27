@@ -61,7 +61,7 @@ def flatten(nested: list[list]) -> list:
     while len(queue) > 0:
         # Queue -> take from front of list
         # Stack -> take from end of list
-        item: list | any = queue.pop(0)
+        item: list | object = queue.pop(0)
         # if the item is a list, we need to examine its elements
         # in case of additional layers of nesting
         if isinstance(item, list):
