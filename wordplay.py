@@ -73,7 +73,7 @@ def flatten(nested: list[list]) -> list:
 
 def nested_sum(nested: list[list[int]]) -> int:
     "Adds all integers in a set of nested lists"
-    return 0
+    return sum(flatten(nested))
 
 
 def cumulative_sum(numbers: list[int]) -> list[int]:
