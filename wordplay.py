@@ -98,24 +98,57 @@ def cumulative_sum(numbers: list[int]) -> list[int]:
 
 def middle(seq: list) -> list:
     "Creates a new list that contains all but the first and last elements of seq"
-    return seq
+    return seq[1:-1]
 
 
 def chop(seq: list) -> None:
     "Removes the first and last elements of seq"
+    seq.pop(0)
+    seq.pop(-1)
     return
 
 
 def is_sorted(seq: list) -> bool:
     "Tests whether the sequence is sorted in ascending order"
-    return False
-
+    # compare element 0 with element 1, element 1 with element 2, etc (n-1 comparisons)
+    for index, element in enumerate(seq[:-1]): # Remember guardrails!
+        if element > seq[index + 1]:
+            return False
+    return True
 
 def reverse_pairs(words: list[str]) -> list[tuple[str]]:
     "Find all pairs of words which are reverse-related"
-    return list(tuple())
+    pairs = []
+    for word in words: # we do this block n times
+        # We can search for an item in a collection using `in`
+        if word[::-1] in words: # Usually this operator goes through n words
+            pairs.append((word, word[::-1]))
+    return pairs
 
 
-def interlocking_pairs(words: list[str]) -> list[tuple[str]]:
-    "Find all pairs of words which interlock to form a new word"
-    return list(tuple())
+def reverse_pairs_list(words: list[str]) -> list[tuple[str]]:
+    "Find all pairs of words which are reverse-related"
+    pairs = []
+    ops = 0
+    for index, word in enumerate(words): # we do this block n times
+        # This block mimics the in/contains operator #
+        for candidate in words:
+            ops += 1
+            if word[::-1] == candidate:
+        ##############################################
+                pairs.append((word, word[::-1]))
+                break
+    print(f'Total Comparisons = {ops}')
+    return pairs
+
+def reverse_pairs_set(words: set[str]) -> list[tuple[str]]:
+    "Find all pairs of words which are reverse-related"
+    ops = 0
+    pairs = []
+    for word in words: # we do this block n times
+        ops += 1
+        # We can search for an item in a collection using `in`
+        if word[::-1] in words: # This is one operation
+            pairs.append((word, word[::-1]))
+    print(f'Total Comparisons = {ops}')
+    return pairs
